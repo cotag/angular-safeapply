@@ -1,0 +1,5 @@
+{
+  "name": "angular-safeapply",
+  "version": "1.0.0",
+  "main": "./safe-apply.js"
+}
