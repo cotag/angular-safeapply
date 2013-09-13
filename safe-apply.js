@@ -23,7 +23,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('SafeApply')
+    angular.module('SafeApply', [])
 
         .factory('$safeApply', ['$rootScope', function($rootScope) {
             $rootScope.$safeApply = function() {
@@ -36,7 +36,7 @@
                     } else {
                         $scope = arg;
                     }
-                } else {
+                } else if (arguments.length > 0) {
                     $scope = arguments[0];
                     fn = arguments[1];
                     if(arguments.length === 3) {
