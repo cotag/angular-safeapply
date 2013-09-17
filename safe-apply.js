@@ -20,34 +20,34 @@
  * THE SOFTWARE.
  */
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular.module('SafeApply', [])
 
-        .factory('$safeApply', ['$rootScope', function($rootScope) {
-            $rootScope.$safeApply = function() {
-                var $scope, fn, arg, force = false;
+        .factory('$safeApply', ['$rootScope', function ($rootScope) {
+            $rootScope.$safeApply = function () {
+                var $scope, fn, arg, force = false, args = arguments;
 
-                if(arguments.length === 1) {
-                    arg = arguments[0];
-                    if(typeof arg === 'function') {
+                if (args.length === 1) {
+                    arg = args[0];
+                    if (typeof arg === 'function') {
                         fn = arg;
                     } else {
                         $scope = arg;
                     }
-                } else if (arguments.length > 0) {
-                    $scope = arguments[0];
-                    fn = arguments[1];
-                    if(arguments.length === 3) {
-                        force = !!arguments[2];
+                } else if (args.length > 0) {
+                    $scope = args[0];
+                    fn = args[1];
+                    if (args.length === 3) {
+                        force = !!args[2];
                     }
                 }
 
                 $scope = $scope || this;
-                fn = fn || function() {};
-                
-                if(force || !$scope.$$phase) {
+                fn = fn || function () {};
+
+                if (force || !$scope.$$phase) {
                     $scope.$apply ? $scope.$apply(fn) : $scope.apply(fn);
                 } else {
                     fn();
@@ -58,6 +58,6 @@
         }])
 
         // Mix it into the root scope
-        .run(['$safeApply', function() {}]);
+        .run(['$safeApply', function () {}]);
 
 }(this.angular));
