@@ -44,7 +44,7 @@
                     }
                 }
 
-                $scope = $scope || this;
+                $scope = $scope || this || $rootScope;
                 fn = fn || function () {};
 
                 if (force || !$scope.$$phase) {
