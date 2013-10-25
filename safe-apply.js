@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-(function (angular) {
+(function (angular, window) {
     'use strict';
 
     angular.module('SafeApply', [])
@@ -45,6 +45,12 @@
                 }
 
                 $scope = $scope || this || $rootScope;
+                // Weird v8 bug where sometimes this === window
+                // Doesn't happen if you set breakpoints either
+                // used a try / catch with a debugger statement
+                // before I could inspect an exception instance
+                if ($scope === window) { $scope = $rootScope; }
+                
                 fn = fn || function () {};
 
                 if (force || !($scope.$$phase || $scope.$root.$$phase)) {
@@ -60,4 +66,4 @@
         // Mix it into the root scope
         .run(['$safeApply', function () {}]);
 
-}(this.angular));
+}(this.angular, this));
