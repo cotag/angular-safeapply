@@ -53,7 +53,8 @@
                 
                 fn = fn || function () {};
 
-                if (force || !($scope.$$phase || $scope.$root.$$phase)) {
+                if (force || !($scope.$$phase ||
+                        ($scope.$root && $scope.$root.$$phase))) {
                     $scope.$apply ? $scope.$apply(fn) : $scope.apply(fn);
                 } else {
                     fn();
